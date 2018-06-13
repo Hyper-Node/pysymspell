@@ -3,6 +3,15 @@ import os
 import sys
 
 class SymSpell():
+
+    """
+    Verbosity level helper class for outputs
+    """
+    class Verbosity():
+        TOP = 0
+        CLOSEST = 1
+        ALL = 2
+
     """SymSpell: 1 million times faster through Symmetric Delete spelling correction algorithm.
 
     The Symmetric Delete spelling correction algorithm reduces the complexity of edit candidate generation and dictionary lookup
@@ -113,6 +122,14 @@ class SymSpell():
                     key, count = line.split()
                     count = int(count)
                     self._create_dictionary_entry(key, count)
+
+        if self._deletes is None:
+            self._deletes = dict()
+
+    def create_dictionary_by_list(self, corpus_list):
+        for line in corpus_list:
+            for key in line.split():
+                    self._create_dictionary_entry(key, 1)
 
         if self._deletes is None:
             self._deletes = dict()
